@@ -20,11 +20,11 @@ async function signup(req, res){
         return res.status(error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
     }
 }
-async function signIn(req, res){
+async function login(req, res){
     try {
         const data = req.body;
         console.log('user req obj :',req.body);
-        const response = await UserService.signIn({
+        const response = await UserService.login({
             email : req.body.email,
             password: req.body.password
         });
@@ -38,7 +38,21 @@ async function signIn(req, res){
     }
 }
 
+async function getAllUsers(req,res){
+    try {
+        const data = req.body;
+        const response = await UserService.getAllUsers();
+
+        SuccessResponse.data = response;
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    } catch (error) {
+        console.log('user controller get all users error : ',error);
+        ErrorResponse.data = error;
+        return res.status(error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
+    }
+}
 module.exports = {
     signup,
-    signIn
+    login,
+    getAllUsers
 }

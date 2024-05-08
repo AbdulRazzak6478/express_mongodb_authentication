@@ -41,7 +41,7 @@ async function signup(data)
     }
 }
 
-async function signIn(data)
+async function login(data)
 {
     try {
         // get user by email to check its present or not
@@ -82,7 +82,21 @@ async function signIn(data)
     } 
 }
 
+async function getAllUsers()
+{
+    try {
+        const users = await userRepository.getAll();
+        console.log('users : ',users);
+
+        return users;
+    } catch (error) {
+        console.log('user service getAll users  error :',error);
+        throw new AppError(`Not able to get the users , ${error?.message}`,error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+}
+
 module.exports = {
     signup,
-    signIn
+    login,
+    getAllUsers
 }

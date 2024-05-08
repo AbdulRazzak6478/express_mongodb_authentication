@@ -6,7 +6,8 @@ const { InfoController, UserController } = require('../controllers/index.js');
 router.get('/info',InfoController.info);
 
 router.post('/signup',UserController.signup);
-router.post('/signin',UserController.signIn);
+router.post('/login',UserController.login);
+router.get('/users',UserController.getAllUsers);
 
 
 module.exports = router;
