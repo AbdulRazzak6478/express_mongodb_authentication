@@ -15,7 +15,6 @@ async function checkPassword(plainPassword, encryptedPassword){
 async function createToken(input)
 {
     try {
-        console.log('private ,secret key : ',ServerConfig.JWT_SECRET,ServerConfig.JWT_EXPIRY);
         const token = await jwt.sign(input,ServerConfig.JWT_SECRET,{expiresIn:ServerConfig.JWT_EXPIRY});
         return token;
     } catch (error) {
@@ -23,7 +22,16 @@ async function createToken(input)
     }
 }
 
+function verifyToken(token){
+    try {
+        return jwt.verify(token,ServerConfig.JWT_SECRET);
+    } catch (error) {
+        console.log('verifytoken error ',error.message,error.name);
+        throw error;
+    }
+}
 module.exports = {
     checkPassword,
     createToken,
+    verifyToken
 }
